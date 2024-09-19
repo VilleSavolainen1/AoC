@@ -1,18 +1,13 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <cctype>
-#include <numeric>
+#include <bits/stdc++.h>
 
+using namespace std;
 
-
-bool isDigit(char ch){
-    return std::isdigit(static_cast<unsigned char>(ch));
+bool isDigit(char ch)
+{
+    return isdigit(static_cast<unsigned char>(ch));
 }
 
-
-int parseNum(std::string line){
+int parseNum(string line){
     std::string numbers;
     char num1 = '0';
     char num2 = '0';
@@ -32,19 +27,39 @@ int parseNum(std::string line){
     return stoi(numbers);
 }
 
-int main(){
-    std::fstream file{"input.txt"};
-    if(!file){
-        std::cerr<<"Error";
+int convert(string &line)
+{
+    auto digits = map<string, char>{
+        {"one", '1'}, {"two", '2'}, {"three", '3'}, {"four", '4'}, {"five", '5'}, {"six", '6'}, {"seven", '7'}, {"eight", '8'}, {"nine", '9'}};
+
+    auto converted = string(line);
+    for(auto d : digits){
+        auto pos = 0;
+        while((pos = converted.find(d.first, pos)) != string::npos){
+            converted.insert(converted.begin() + pos + 1, 1, d.second);
+            pos += 2;
+        }
+    }
+    
+    return parseNum(converted);
+}
+
+int main()
+{
+    fstream file{"input.txt"};
+    if (!file)
+    {
+        cerr << "Error";
         return 1;
     }
-    std::string line;
-    std::vector<int> nums;
-    while(getline(file, line)){
-        nums.push_back(parseNum(line));
+    string line;
+    vector<int> nums;
+    while (getline(file, line))
+    {
+        nums.push_back(convert(line));
     }
-    int result = std::accumulate(nums.begin(), nums.end(), 0);
-    std::cout<<result;
+    int result = accumulate(nums.begin(), nums.end(), 0);
+    cout << result;
     file.close();
     return 0;
 }
