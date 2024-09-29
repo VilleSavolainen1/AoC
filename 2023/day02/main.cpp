@@ -6,6 +6,51 @@ int red = 12;
 int green = 13;
 int blue = 14;
 
+int powerOfFewestNumberOfCubes(string x){
+    int fewestRed = 0;
+    int fewestGreen = 0;
+    int fewestBlue = 0;
+    int num = 0;
+    string color;
+    string numString;
+    for (int i = 0; i < x.length(); i++){
+        if (isdigit(static_cast<unsigned char>(x[i])))
+        {
+            numString += string() + x[i];
+        }
+        else
+        {
+            num = stoi(numString);
+            color += x[i];
+            if (color == "red")
+            {
+               if(num > fewestRed){
+                fewestRed = num;
+               }
+            }
+            else if (color == "green")
+            {
+                if(num > fewestGreen){
+                    fewestGreen = num;
+                }
+                
+            }
+            else if (color == "blue")
+            {
+                if(num > fewestBlue){
+                    fewestBlue = num;
+                }
+            }
+            if (x[i] == ',' || x[i] == ';')
+            {
+                color = "";
+                numString = "";
+            }
+        }
+    }
+    return fewestRed * fewestGreen * fewestBlue;
+}
+
 bool canPlay(string x)
 {
     string color;
@@ -89,8 +134,8 @@ int main()
     string line;
     int idx{0};
     int result{0};
-    vector<int> possibleId;
-    vector<string> games;
+    vector<int>fewestNumberOfCubesArray;
+    int fewestNumberOfCubesResult = 0;
     while (getline(file, line))
     {
         idx++;
@@ -103,9 +148,16 @@ int main()
             {
                 result += idx;
             };
+            fewestNumberOfCubesArray.push_back(powerOfFewestNumberOfCubes(removeSpaces(x)));
         }
     }
-    cout << "result " << result << '\n';
+    //part 1
+    cout << "part1 result " << result << '\n';
+    for(auto& it : fewestNumberOfCubesArray){
+        fewestNumberOfCubesResult += it;
+    }
+    //part 2
+    cout<<"part2 result "<< fewestNumberOfCubesResult <<'\n';
     file.close();
     return 0;
 }
