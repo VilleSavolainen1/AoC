@@ -3,6 +3,9 @@ file = open("input.txt", "r")
 
 lines = file.readlines()
 
+
+# -----------PART  ONE---------------
+
 xmas = re.compile("XMAS")
 samx = re.compile("SAMX")
 
@@ -48,5 +51,24 @@ def countDiagonalLeft():
     return count
     
 
-# Part one
-print("PART ONE ",countHorizontal()+countVertical()+countDiagonalRight()+countDiagonalLeft())
+print("PART ONE ", countHorizontal()+countVertical()+countDiagonalRight()+countDiagonalLeft())
+
+
+
+#----------------PART TWO-----------------
+
+mas = re.compile("MAS")
+sam = re.compile("SAM")
+
+def checkXMas():
+    count = 0
+    for i in range(len(lines)-2):
+         for j in range(len(lines[i])-3):
+            str = lines[i][j] + lines[i+1][j+1] + lines[i+2][j+2]
+            if mas.search(str) or sam.search(str):
+                    str2 = lines[i][j+2] + lines[i+1][j+1] + lines[i+2][j]
+                    if mas.search(str2) or sam.search(str2):
+                        count += 1
+    return count
+
+print("PART TWO", checkXMas())
