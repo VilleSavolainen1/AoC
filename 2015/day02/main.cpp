@@ -1,15 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// length l, width w, and height h
-// 2*l*w + 2*w*h + 2*h*l
-// 2x3x4 requires 2*6 + 2*12 + 2*8 = 52
-
 int main()
 {
     fstream file("input.txt");
     string line;
     int squareFeet = 0;
+    int ribbon = 0;
     if (!file)
     {
         cerr << "Error";
@@ -35,9 +32,13 @@ int main()
         sides.push_back(h);
         vector<int>::iterator min = min_element(sides.begin(), sides.end());
         int count = (2 * (l)) + (2 * (w)) + (2 * (h)) + *min;
+        sort(nums.begin(), nums.end());
+        int ribbonCount = (nums[0] + nums[0] + nums[1] + nums[1]) + (nums[0] * nums[1] * nums[2]);
         squareFeet += count;
+        ribbon += ribbonCount;
     }
     cout << "PART ONE " << squareFeet << '\n';
+    cout << "PART TWO " << ribbon << '\n';
     file.close();
     return 0;
 }
