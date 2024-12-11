@@ -54,7 +54,6 @@ while True:
             row -= 1
             if (col, row) not in visited:
                 positions += 1
-count = 0
 
 
 print("PART ONE ", positions)  
