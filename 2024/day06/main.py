@@ -1,17 +1,20 @@
+import copy
+
 file = open("input.txt", "r")
 
 lines = file.readlines()
 col, row = 0, 0
+startCol, startRow = 0, 0
 direction = "up"
+visited = set()
 positions = 1
-visited = []
 
-for i in range(0, len(lines)):
-    for j in range(0, len(lines[i])):
-        if "^" in lines[i][j]:
-            col = i
-            row = j
-            break
+
+for y, line in enumerate(lines):
+    for x, char in enumerate(line):
+        if char == "^":
+            row, col = x, y
+
 
 while True:
     if direction == "up":
@@ -20,7 +23,7 @@ while True:
         if lines[col-1][row] == "#":
             direction = "right"
         else:
-            visited.append((col, row))
+            visited.add((col, row))
             col -= 1
             if (col, row) not in visited:
                 positions += 1
@@ -30,7 +33,7 @@ while True:
         if lines[col][row+1] == "#":
             direction = "down"
         else:
-            visited.append((col, row))
+            visited.add((col, row))
             row += 1
             if (col, row) not in visited:
                 positions += 1
@@ -40,7 +43,7 @@ while True:
         if lines[col+1][row] == "#":
             direction = "left"
         else:
-            visited.append((col, row))
+            visited.add((col, row))
             col += 1
             if (col, row) not in visited:
                 positions += 1
@@ -50,10 +53,13 @@ while True:
         if lines[col][row-1] == "#":
             direction = "up"
         else:
-            visited.append((col, row))
+            visited.add((col, row))
             row -= 1
             if (col, row) not in visited:
                 positions += 1
 
+print("PART ONE: ", positions)
 
-print("PART ONE ", positions)  
+
+            
+
