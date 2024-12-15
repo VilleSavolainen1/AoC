@@ -28,28 +28,29 @@ int main()
     }
     sort(begin(first), end(first));
     sort(begin(second), end(second));
-    for(int i = 0; i < 1000; ++i){
+    for (int i = 0; i < 1000; ++i)
+    {
         int score = 0;
         divs.push_back(abs(second[i] - first[i]));
-        for(int j = 0; j < 1000; ++j){
-            if(second[j] == first[i]){
+        for (int j = 0; j < 1000; ++j)
+        {
+            if (second[j] == first[i])
+            {
                 score++;
             }
         }
         similarities.push_back(first[i] * score);
     }
     int totalDistance = 0;
-    for(auto i : divs){
+    for (auto i : divs)
+    {
         totalDistance += i;
     }
-    int sims = 0;
-    for(auto j : similarities){
-        sims += j;
-    }
-    //Part one
+
+    // Part one
     cout << totalDistance << '\n';
-    //Part two
-    cout << sims << '\n';
+    // Part two
+    cout << accumulate(similarities.begin(), similarities.end(), 0);
     file.close();
     return 0;
 }
